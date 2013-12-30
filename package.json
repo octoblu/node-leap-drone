@@ -1,0 +1,10 @@
+{
+    "name": "node-leap-drone"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "underscore": ""
+    , "express" : ""
+    , "ar-drone" : ""
+  }
+}
