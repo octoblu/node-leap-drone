@@ -47,6 +47,20 @@
             //$('#log').append(counter + '<br />')
 
             if(latestFrame.hands.length > 0){
+                
+                if(latestFrame.gestures[0])
+                    var gestureType = latestFrame.gestures[0].type;
+
+                if (gestureType === "swipe")
+                {
+                    
+                    if (latestFrame.gestures[0].direction[0] > 0){
+                        $log.append('swipe >' + '<br />')
+                    } else {
+                        $log.append('< swipe' + '<br />')
+                    }
+                }
+
                 if(!drone.flying) {
         
               socket.emit('message', {
@@ -107,87 +121,87 @@
                     }
                 }
 
-                // move right/left
-                if(hand.palmPosition[0] > base.position.x  + offset) {
-                    $log.append('right' + '<br />')
-                    if(drone.x != 'right') {
-                        drone.x = 'right'
-                  socket.emit('message', {
-                    "devices": "*",
-                    "message": {
-                        "fly":"xaxis",
-                        "x":"right"
-                  }}, function(data){
-                            console.log('right: ' + data)
-                  });         
-                    }
-                } else if(hand.palmPosition[0] < base.position.x  - offset) {
-                    $log.append('left' + '<br />')
-                    if(drone.x != 'left') {
-                        drone.x = 'left'
-                  socket.emit('message', {
-                    "devices": "*",
-                    "message": {
-                        "fly":"xaxis",
-                        "x":"left"
-                  }}, function(data){
-                            console.log('left: ' + data)
-                  });         
-                    }
-                } else {
-                    if(drone.x != 'steady') {
-                        drone.x = 'steady'
-                  socket.emit('message', {
-                    "devices": "*",
-                    "message": {
-                        "fly":"xaxis",
-                        "x":"steady"
-                  }}, function(data){
-                            console.log('steady: ' + data)
-                  });         
-                    }
-                }
+                // // move right/left
+                // if(hand.palmPosition[0] > base.position.x  + offset) {
+                //     $log.append('right' + '<br />')
+                //     if(drone.x != 'right') {
+                //         drone.x = 'right'
+                //   socket.emit('message', {
+                //     "devices": "*",
+                //     "message": {
+                //         "fly":"xaxis",
+                //         "x":"right"
+                //   }}, function(data){
+                //             console.log('right: ' + data)
+                //   });         
+                //     }
+                // } else if(hand.palmPosition[0] < base.position.x  - offset) {
+                //     $log.append('left' + '<br />')
+                //     if(drone.x != 'left') {
+                //         drone.x = 'left'
+                //   socket.emit('message', {
+                //     "devices": "*",
+                //     "message": {
+                //         "fly":"xaxis",
+                //         "x":"left"
+                //   }}, function(data){
+                //             console.log('left: ' + data)
+                //   });         
+                //     }
+                // } else {
+                //     if(drone.x != 'steady') {
+                //         drone.x = 'steady'
+                //   socket.emit('message', {
+                //     "devices": "*",
+                //     "message": {
+                //         "fly":"xaxis",
+                //         "x":"steady"
+                //   }}, function(data){
+                //             console.log('steady: ' + data)
+                //   });         
+                //     }
+                // }
 
-                // move right/left
-                if(hand.palmPosition[2] > base.position.z  + offset) {
-                    $log.append('backward' + '<br />')
-                    if(drone.z != 'back') {
-                        drone.z = 'back'
-                  socket.emit('message', {
-                    "devices": "*",
-                    "message": {
-                        "fly":"zaxis",
-                        "z":"back"
-                  }}, function(data){
-                            console.log('back: ' + data)
-                  });         
-                    }
-                } else if(hand.palmPosition[2] < base.position.z  - offset) {
-                    $log.append('forward' + '<br />')
-                    if(drone.z != 'front') {
-                        drone.z = 'front'
-                  socket.emit('message', {
-                    "devices": "*",
-                    "message": {
-                        "fly":"zaxis",
-                        "z":"front"
-                  }}, function(data){
-                            console.log('front: ' + data)
-                  });         
-                    }
-                } else {
-                    if(drone.z != 'steady') {
-                        drone.z = 'steady'
-                  socket.emit('message', {
-                    "devices": "*",
-                    "message": {
-                        "fly":"zaxis",
-                        "z":"steady"
-                  }}, function(data){
-                            console.log('steady: ' + data)
-                  });         
-                    }
-                }
+                // // move right/left
+                // if(hand.palmPosition[2] > base.position.z  + offset) {
+                //     $log.append('backward' + '<br />')
+                //     if(drone.z != 'back') {
+                //         drone.z = 'back'
+                //   socket.emit('message', {
+                //     "devices": "*",
+                //     "message": {
+                //         "fly":"zaxis",
+                //         "z":"back"
+                //   }}, function(data){
+                //             console.log('back: ' + data)
+                //   });         
+                //     }
+                // } else if(hand.palmPosition[2] < base.position.z  - offset) {
+                //     $log.append('forward' + '<br />')
+                //     if(drone.z != 'front') {
+                //         drone.z = 'front'
+                //   socket.emit('message', {
+                //     "devices": "*",
+                //     "message": {
+                //         "fly":"zaxis",
+                //         "z":"front"
+                //   }}, function(data){
+                //             console.log('front: ' + data)
+                //   });         
+                //     }
+                // } else {
+                //     if(drone.z != 'steady') {
+                //         drone.z = 'steady'
+                //   socket.emit('message', {
+                //     "devices": "*",
+                //     "message": {
+                //         "fly":"zaxis",
+                //         "z":"steady"
+                //   }}, function(data){
+                //             console.log('steady: ' + data)
+                //   });         
+                //     }
+                // }
                 
                 if(latestFrame.gestures > 0) {
                     console.log(latestFrame.gestures)
