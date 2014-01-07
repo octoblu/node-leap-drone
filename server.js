@@ -69,6 +69,29 @@ conn.on('ready', function(data){
           client.counterClockwise(0.0)
         } 
 
+      } else if(data.fly == 'spin'){
+        console.log("spin");
+        if(data.x == 'left') {
+          client.counterClockwise(0.6)
+        } 
+        else if(data.x == 'right') {
+          client.clockwise(0.6)
+        } else {
+          client.counterClockwise(0.0)
+        } 
+
+      } else if(data.fly == 'flip'){
+        console.log("flip");
+        if(data.x == 'left') {
+          client.animate('flipLeft', 1000);
+        } 
+        else if(data.x == 'right') {
+          client.animate('flipRight', 1000);
+        } else {
+          client.animate('flipLeft', 1000);
+        } 
+
+
       } else if(data.fly == 'zaxis'){
         console.log("zaxis");
         if(data.z == 'front') {

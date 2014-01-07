@@ -48,18 +48,6 @@
 
             if(latestFrame.hands.length > 0){
                 
-                if(latestFrame.gestures[0])
-                    var gestureType = latestFrame.gestures[0].type;
-
-                if (gestureType === "swipe")
-                {
-                    
-                    if (latestFrame.gestures[0].direction[0] > 0){
-                        $log.append('swipe >' + '<br />')
-                    } else {
-                        $log.append('< swipe' + '<br />')
-                    }
-                }
 
                 if(!drone.flying) {
         
@@ -106,8 +94,9 @@
                             console.log('down: ' + data)
                   });         
                     }
-                }
-                else {
+
+
+                } else {
                     if(drone.y != 'steady') {
                         drone.y = 'steady'
                   socket.emit('message', {
@@ -118,6 +107,57 @@
                   }}, function(data){
                             console.log('steady: ' + data)
                   });         
+                    }
+                }
+
+                if(latestFrame.gestures[0] && latestFrame.gestures[0].type === "swipe" ){
+                    var gestureType = latestFrame.gestures[0].type;
+
+                    if (gestureType === "swipe")
+                    {                    
+                        if (latestFrame.gestures[0].direction[0] > 0){
+                            $log.html('flip >' + '<br />')
+                              socket.emit('message', {
+                                "devices": "*",
+                                "message": {
+                                    "fly":"flip",
+                                    "x":"right"
+                              }}, function(data){
+                                        console.log('flip: ' + data)
+                              });         
+
+                        } else {
+                            $log.html('< flip' + '<br />')
+
+                              socket.emit('message', {
+                                "devices": "*",
+                                "message": {
+                                    "fly":"flip",
+                                    "x":"left"
+                              }}, function(data){
+                                        console.log('flip: ' + data)
+                              });         
+
+                        }
+                    }
+                }
+
+
+                if(latestFrame.gestures[0] && latestFrame.gestures[0].type === "circle" ){
+                    var gestureType = latestFrame.gestures[0].type;
+
+                    if (gestureType === "circle")
+                    {                    
+                        $log.html('circle >' + '<br />')
+                          socket.emit('message', {
+                            "devices": "*",
+                            "message": {
+                                "fly":"spin",
+                                "x":"right"
+                          }}, function(data){
+                                    console.log('spin: ' + data)
+                          });         
+
                     }
                 }
 
