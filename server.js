@@ -5,6 +5,7 @@ var express = require('express')
   , _ = require('underscore')
   , arDrone = require('ar-drone')
   , skynet = require('skynet')
+  // , skynet = require('./../skynet/npm')
 
 var client  = arDrone.createClient()
 var publicDir = __dirname + '/public'
@@ -24,11 +25,14 @@ app.get('/', function(req, res) {
 })
 
 var server = http.createServer(app)
-server.listen(process.env.PORT || 3000);
+server.listen(process.env.PORT || 3001);
 
 var conn = skynet.createConnection({
-  "uuid": "0d3a53a0-2a0b-11e3-b09c-ff4de847b2cc",
-  "token": "qirqglm6yb1vpldixflopnux4phtcsor"
+  "uuid": "2f3113d0-2796-11e3-95ef-e3081976e170",
+  "token": "uvgawgfv5597lditx8gp3ua2izilik9",
+  // "protocol": "mqtt",
+  // "qos": 0
+  "protocol": "websocket"
 });
 
 conn.on('ready', function(data){
