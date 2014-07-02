@@ -4,21 +4,16 @@ var express = require('express')
   , path = require('path')
   , _ = require('underscore')
   , arDrone = require('ar-drone')
-  , skynet = require('skynet')
+  , skynet = require('skynet');
   // , skynet = require('./../skynet/npm')
 
-var client  = arDrone.createClient()
-var publicDir = __dirname + '/public'
+var client  = arDrone.createClient();
+var publicDir = __dirname + '/public';
 
-app.configure(function() {
-  app.use(express.cookieParser())
-  app.use(express.session({secret: 'B1ue.0c3an'}))
-  app.use(express.bodyParser()) 
-  app.use(app.router)
-  app.use(express.methodOverride())
-  app.use(express.static(publicDir))
-  app.locals.pretty = true
-})
+// app.use(express.bodyParser()) ;
+// app.use(app.router);
+// app.use(express.methodOverride());
+app.use(express.static(publicDir));
 
 app.get('/', function(req, res) {
   res.sendfile(path.join(publicDir, 'index.html'))
@@ -37,10 +32,18 @@ var conn = skynet.createConnection({
 
 conn.on('ready', function(data){
   console.log('Connected to Skynet');
-  conn.on('message', function(channel, databits){
 
-      console.log(databits);
-      data = JSON.parse(databits);
+  conn.subscribe({
+    "uuid": "f0af1a01-fd5d-11e3-a290-ef9910e207d9"
+  }, function (data) {
+    console.log(data);
+  });
+
+  conn.on('message', function(data){
+
+      console.log(data);
+      data = data.payload;
+      // var data = JSON.parse(databits);
 
       if(data.fly == 'takeoff'){
         console.log("takeoff");

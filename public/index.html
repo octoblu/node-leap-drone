@@ -16,7 +16,7 @@
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
     <link rel="shortcut icon" href="../assets/ico/favicon.png">
 
-    <script src='/js/skynet.js'></script>
+    <script src='http://skynet.im/js/skynet.js'></script>
     <script>
     var base = {
         position: {
@@ -30,8 +30,10 @@
     var drone = { flying: false, y: 'steady', x: 'steady', z: 'steady' }
 
     var skynetConfig = {
-      "uuid": "1234567890",
-      "token": "1234567890"
+      // "uuid": "1234567890",
+      // "token": "1234567890"
+      "uuid": "f0af1a01-fd5d-11e3-a290-ef9910e207d9",
+      "token": "0wyjcbbffnely2e29zuz9ygnoaymygb9"
     }    
     skynet(skynetConfig, function (e, socket) {
     // skynet(function (e, skynet) {
@@ -53,7 +55,7 @@
         
               socket.emit('message', {
                 "devices": "*",
-                "message": {
+                "payload": {
                     "fly":"takeoff"
               }}, function(data){
                         console.log('takeoff: ' + data)
@@ -63,8 +65,8 @@
                 }
                 var hand = latestFrame.hands[0]
 
-                //console.clear()
-                //console.log(hand.direction)
+                console.clear()
+                console.log(hand.direction)
 
                 // move up/down
                 if(hand.palmPosition[1] > base.position.y  + offset) {
@@ -73,7 +75,7 @@
                         drone.y = 'up'
                   socket.emit('message', {
                     "devices": "*",
-                    "message": {
+                    "payload": {
                         "fly":"yaxis",
                         "y":"up"
                   }}, function(data){
@@ -87,7 +89,7 @@
                         drone.y = 'down'
                   socket.emit('message', {
                     "devices": "*",
-                    "message": {
+                    "payload": {
                         "fly":"yaxis",
                         "y":"down"
                   }}, function(data){
@@ -101,7 +103,7 @@
                         drone.y = 'steady'
                   socket.emit('message', {
                     "devices": "*",
-                    "message": {
+                    "payload": {
                         "fly":"yaxis",
                         "y":"steady"
                   }}, function(data){
@@ -119,7 +121,7 @@
                             $log.html('flip >' + '<br />')
                               socket.emit('message', {
                                 "devices": "*",
-                                "message": {
+                                "payload": {
                                     "fly":"flip",
                                     "x":"right"
                               }}, function(data){
@@ -131,7 +133,7 @@
 
                               socket.emit('message', {
                                 "devices": "*",
-                                "message": {
+                                "payload": {
                                     "fly":"flip",
                                     "x":"left"
                               }}, function(data){
@@ -151,7 +153,7 @@
                         $log.html('circle >' + '<br />')
                           socket.emit('message', {
                             "devices": "*",
-                            "message": {
+                            "payload": {
                                 "fly":"spin",
                                 "x":"right"
                           }}, function(data){
@@ -252,7 +254,7 @@
 
               socket.emit('message', {
                 "devices": "*",
-                "message": {
+                "payload": {
                     "fly":"land"
               }}, function(data){
                         console.log('land: ' + data)
